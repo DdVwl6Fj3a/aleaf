@@ -25,3 +25,5 @@ cd aleaf
 ```
 
 Refer [here](https://mozilla.github.io/firefox-browser-architecture/experiments/2017-09-21-rust-on-android.html) for more details.
+
+Please note this is a debug build, you may easily modify the script `./app/src/main/rust/leaf-android/build.sh` to make a release build.
