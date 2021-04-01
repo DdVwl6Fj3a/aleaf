@@ -1,0 +1,3 @@
+[submodule "leaf"]
+	path = app/src/main/rust/leaf
+	url = https://github.com/eycorsican/leaf.git

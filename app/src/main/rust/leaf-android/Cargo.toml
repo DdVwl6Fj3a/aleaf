@@ -1,0 +1,19 @@
+[package]
+name = "leaf-android"
+version = "0.1.0"
+authors = ["ghost <noreply>"]
+edition = "2018"
+
+[lib]
+name = "leafandroid"
+path = "src/lib.rs"
+crate-type = ["dylib"]
+
+[features]
+default = [
+    "leaf-mobile/default-ring"
+]
+
+[dependencies]
+leaf-mobile = { path = "../leaf/leaf-mobile", package = "leaf-mobile", default-features = false }
+jni = { version = "0.19", default-features = false }
