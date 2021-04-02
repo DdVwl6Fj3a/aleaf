@@ -24,7 +24,7 @@ cd aleaf
 ./app/src/main/rust/leaf-android/build.sh debug
 ```
 
-Refer [here](https://mozilla.github.io/firefox-browser-architecture/experiments/2017-09-21-rust-on-android.html) and [here](https://github.com/eycorsican/aleaf/.github/workflows/ci.yml) for more details.
+Refer [here](https://mozilla.github.io/firefox-browser-architecture/experiments/2017-09-21-rust-on-android.html) and [here](https://github.com/eycorsican/aleaf/blob/master/.github/workflows/ci.yml) for more details.
 
 ## Limitation
 
