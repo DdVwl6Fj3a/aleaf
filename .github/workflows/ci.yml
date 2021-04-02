@@ -1,0 +1,60 @@
+name: ci
+
+on: [push, pull_request]
+
+jobs:
+  build-leaf-android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: install rust toolchain
+        uses: hecrj/setup-rust-action@v1
+        with:
+          rust-version: nightly
+
+      - name: install deps
+        run: |
+          sudo apt-get update && sudo apt-get install -y unzip curl default-jdk gcc build-essential
+
+      - name: build
+        run: |
+          export RUSTFLAGS="-Z strip=symbols"
+          export ANDROID_HOME=/tmp/Android/sdk
+          export NDK_HOME=/tmp/Android/sdk/ndk-bundle
+          export PATH=$ANDROID_HOME/cmdline-tools/bin:$PATH
+          export PATH=~/.cargo/bin:$PATH
+          WD=`pwd`
+          # install Android SDK and NDK
+          cd /tmp/
+          curl -OL https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip
+          unzip commandlinetools-linux-6858069_latest.zip
+          mkdir -p $ANDROID_HOME
+          mv cmdline-tools $ANDROID_HOME
+          yes | sdkmanager --sdk_root=$ANDROID_HOME --licenses
+          sdkmanager --sdk_root=$ANDROID_HOME "ndk-bundle" "platforms;android-21"
+          cd $WD
+          # add targets
+          rustup target add aarch64-linux-android x86_64-linux-android
+          # build
+          ./app/src/main/rust/leaf-android/build.sh release
+
+      - name: copy artifacts
+        run: |
+          cp app/src/main/rust/leaf-android/target/x86_64-linux-android/release/libleafandroid.so libleafandroid-x86_64-linux-android.so
+          cp app/src/main/rust/leaf-android/target/aarch64-linux-android/release/libleafandroid.so libleafandroid-aarch64-linux-android.so
+
+      - name: upload assets
+        uses: actions/upload-artifact@v2
+        with:
+          name: libleafandroid-x86_64-linux-android.so
+          path: libleafandroid-x86_64-linux-android.so
+
+      - name: upload assets
+        uses: actions/upload-artifact@v2
+        with:
+          name: libleafandroid-aarch64-linux-android.so
+          path: libleafandroid-aarch64-linux-android.so
