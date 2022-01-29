@@ -12,13 +12,13 @@ Shows how to build a VPN app for Android using [leaf](https://github.com/eycorsi
 
 ## Building
 
-```
+```bash
 export ANDROID_HOME=/path/to/sdk
 export NDK_HOME=/path/to/sdk/ndk-bundle
 
 rustup target add aarch64-linux-android x86_64-linux-android
 
-git clone --recursive https://github.com/eycorsican/aleaf
+git clone --recursive https://github.com/DdVwl6Fj3a/aleaf
 cd aleaf
 
 ./app/src/main/rust/leaf-android/build.sh debug
